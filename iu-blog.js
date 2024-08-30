@@ -7,12 +7,14 @@ document.addEventListener('DOMContentLoaded', function () {
         originalIframe = iframe;
         originalParent = iframe.parentElement;
     }
+
     function toggleTopContinue(hidden) {
         const topContinue = document.querySelector('#top-continue');
         if (topContinue) {
             hidden ? topContinue.classList.add('hidden') : topContinue.classList.remove('hidden');
         }
     }
+
     document.addEventListener('click', function (event) {
         const target = event.target;
         if (target.matches('a.comment-reply[data-comment-id]')) {
@@ -53,18 +55,21 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // TOGGLE REPLY & REPLIES COUNTER
-    document.querySelectorAll('ol.thread-chrome').forEach(threadOl => {
-        const comments = threadOl.querySelectorAll('li.comment');
-        if (comments.length > 0) {
-            const threadToggle = threadOl.previousElementSibling;
-            const count = comments.length;
-            threadToggle.querySelector('a').textContent = 'Sembunyikan Balasan';
-            if (threadToggle.classList.contains('thread-toggle')) {
-                threadToggle.classList.add('has-children');
-                threadToggle.classList.add('thread-expanded');
+    window.addEventListener('load', () => {
+        document.querySelectorAll('ol.thread-chrome').forEach(threadOl => {
+            const comments = threadOl.querySelectorAll('li.comment');
+            if (comments.length > 0) {
+                const threadToggle = threadOl.previousElementSibling;
+                const count = comments.length;
+                threadToggle.querySelector('a').textContent = 'Sembunyikan Balasan';
+                if (threadToggle.classList.contains('thread-toggle')) {
+                    threadToggle.classList.add('has-children');
+                    threadToggle.classList.add('thread-expanded');
+                }
             }
-        }
+        });
     });
+
     document.querySelectorAll('.thread-toggle').forEach(threadToggle => {
         threadToggle.addEventListener('click', function () {
             const ol = this.nextElementSibling;
